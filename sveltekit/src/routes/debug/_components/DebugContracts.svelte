@@ -8,11 +8,15 @@
 	const selectedContractStorageKey = "scaffoldEth2.selectedContract";
 
 	const contractsData = $derived.by(getAllContracts);
+  $inspect(contractsData);
+
 	const contractNames = $derived(Object.keys(contractsData));
+  $inspect(contractNames[0]);
 
 	let selectedContract = $state<string>();
 	$effect(() => {
 		selectedContract = localStorage.getItem(selectedContractStorageKey) || contractNames[0];
+		console.log("$effect ~ selectedContract:", selectedContract);
 	});
 	$effect(() => {
 		localStorage.setItem(selectedContractStorageKey, String(selectedContract));

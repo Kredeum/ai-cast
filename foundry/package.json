@@ -25,12 +25,12 @@
   "license": "ISC",
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^20.14.10",
+    "@types/node": "^22.1.0",
     "eslint-plugin-json": "^4.0.0",
     "fs-extra": "^11.2.0",
     "prettier": "^3.3.3",
-    "solhint": "^5.0.1",
+    "solhint": "^5.0.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.4"
   }
 }

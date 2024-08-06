@@ -9,15 +9,16 @@ import {
 import type { WindowEthereum } from "./types";
 
 import addresses from "@scaffold-eth-alt/foundry/addresses.json";
-import { abi } from "@scaffold-eth-alt/foundry/out/Counter.sol/Counter.json";
+import { abi } from "@scaffold-eth-alt/foundry/out/AiCast.sol/AiCast.json";
 
-const counter = async (chain: Chain) => {
+const question = async (chain: Chain) => {
 	if (!window) throw new Error("Not in browser");
 
 	const windowEthereum = (window as WindowEthereum).ethereum;
 	if (!windowEthereum) throw new Error("Ethereum Wallet extension not found");
 
-	const address = addresses[11155111]["Counter"] as Address;
+	// const address = addresses[11155111]["AiCast"] as Address;
+	const address = addresses[31337]["AiCast"] as Address;
 
 	const publicClient = createPublicClient({ chain, transport: custom(windowEthereum) });
 
@@ -33,4 +34,4 @@ const counter = async (chain: Chain) => {
 	return { contract, publicClient, walletClient };
 };
 
-export { counter };
+export { question };

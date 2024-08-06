@@ -5,7 +5,7 @@
 	import { sepolia } from "viem/chains";
 
 	import type { GetContractReturnGenericType } from "$lib/types";
-	import { counter } from "$lib/counter";
+	import { question } from "$lib/question";
 
 	import IntegerInput from "$lib/components/scaffold-eth/inputs/IntegerInput.svelte";
 
@@ -25,13 +25,13 @@
 	const set = async () => await refresh(await counterContract.write.setNumber([numInput]));
 
 	onMount(async () => {
-		({ contract: counterContract, publicClient } = await counter(sepolia));
+		({ contract: counterContract, publicClient } = await question(sepolia));
 		refresh();
 	});
 </script>
 
 <div class="flex items-center px-5 py-2">
-	<div>Counter:</div>
+	<div>Question:</div>
 
 	<div class="btn btn-primary btn-sm cursor-auto gap-1 font-normal m-2">
 		<span> {num >= 0 ? num : "***"}</span>
