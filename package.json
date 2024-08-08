@@ -1,6 +1,6 @@
 {
-  "name": "scaffold-eth-alt",
-  "version": "0.0.3",
+  "name": "ai-cast",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,6 @@
     "pnpm": "^9"
   },
   "devDependencies": {
-    "turbo": "^2.0.11"
+    "turbo": "^2.0.12"
   }
 }

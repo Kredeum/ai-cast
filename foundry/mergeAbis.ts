@@ -5,20 +5,18 @@ const mergeAbis = async () => {
   const deployedContracts: any = {};
 
   for (const [chainId, contracts] of Object.entries(addresses)) {
-    deployedContracts[chainId] = {};
-
     for (const [contractName, address] of Object.entries(contracts as any)) {
-      if (contractName === "chainName") break;
-      const json = await fs.readJSON(`./out/${contractName}.sol/${contractName}.json`);
+      const jsonPath = `./out/${contractName}.sol/${contractName}.json`;
+      if (!fs.existsSync(jsonPath)) continue;
 
-      deployedContracts[chainId][contractName] = {
-        address, abi: json.abi
-      }
+      const abi = (await fs.readJSON(jsonPath)).abi;
 
+      deployedContracts[chainId] ||= {};
+      deployedContracts[chainId][contractName] = { address, abi }
     }
-    console.log("deployedContracts[Number ~ deployedContracts:", deployedContracts);
-    await fs.writeJSON('./deployedContracts.json', deployedContracts, { spaces: 2 });
   }
+  console.log("deployedContracts", deployedContracts);
+  await fs.writeJSON('./deployedContracts.json', deployedContracts, { spaces: 2 });
 }
 
 mergeAbis().catch(console.error);

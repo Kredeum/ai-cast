@@ -3,10 +3,14 @@
     "chainName": "optimism"
   },
   "11155111": {
+    "FunctionsConsumerExample": "0x8316C228e643297034EDE4dC648460403B953e96",
+    "Router": "0xb83E47C2bC239B3bf370bc41e1459A34b41238D0",
     "chainName": "sepolia"
   },
   "31337": {
-    "AiCast": "0x0116686E2291dbd5e317F47faDBFb43B599786Ef",
+    "AiCast": "0x9bAaB117304f7D6517048e371025dB8f89a8DbE5",
+    "Counter": "0x0116686E2291dbd5e317F47faDBFb43B599786Ef",
+    "FunctionsConsumerExample": "0x1Eb835EB7BEEEE9E6bbFe08F16a2d2eF668204bd",
     "chainName": "anvil"
   }
 }

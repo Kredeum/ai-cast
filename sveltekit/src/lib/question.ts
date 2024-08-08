@@ -8,8 +8,8 @@ import {
 } from "viem";
 import type { WindowEthereum } from "./types";
 
-import addresses from "@scaffold-eth-alt/foundry/addresses.json";
-import { abi } from "@scaffold-eth-alt/foundry/out/AiCast.sol/AiCast.json";
+import addresses from "@ai-cast/foundry/addresses.json";
+import { abi } from "@ai-cast/foundry/out/AiCast.sol/AiCast.json";
 
 const question = async (chain: Chain) => {
 	if (!window) throw new Error("Not in browser");
