@@ -51,7 +51,7 @@
 	"private": true,
 	"scripts": {
 		"build": "vite build",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check2": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"clean": "rm -rf node_modules build .svelte-kit .turbo",
 		"deploy:fleek": "pnpm run build && fleek sites deploy",

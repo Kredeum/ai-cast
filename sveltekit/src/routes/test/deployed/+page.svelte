@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { onMount } from "svelte";
-	import deployedContracts from "$lib/contracts/deployedContracts";
+	import deployments from "@ai-cast/foundry/deployments.json";
 
-	console.log("deployedContracts:", deployedContracts);
+	console.log("deployments:", deployments);
 </script>

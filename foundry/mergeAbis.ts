@@ -2,7 +2,7 @@ import fs from 'fs-extra';
 
 const mergeAbis = async () => {
   const addresses = await fs.readJSON('./addresses.json');
-  const deployedContracts: any = {};
+  const deployments: any = {};
 
   for (const [chainId, contracts] of Object.entries(addresses)) {
     for (const [contractName, address] of Object.entries(contracts as any)) {
@@ -11,12 +11,12 @@ const mergeAbis = async () => {
 
       const abi = (await fs.readJSON(jsonPath)).abi;
 
-      deployedContracts[chainId] ||= {};
-      deployedContracts[chainId][contractName] = { address, abi }
+      deployments[chainId] ||= {};
+      deployments[chainId][contractName] = { address, abi }
     }
   }
-  console.log("deployedContracts", deployedContracts);
-  await fs.writeJSON('./deployedContracts.json', deployedContracts, { spaces: 2 });
+  console.log("deployments", deployments);
+  await fs.writeJSON('./deployments.json', deployments, { spaces: 2 });
 }
 
 mergeAbis().catch(console.error);

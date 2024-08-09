@@ -1,7 +1,7 @@
 {
   "31337": {
     "AiCast": {
-      "address": "0x9bAaB117304f7D6517048e371025dB8f89a8DbE5",
+      "address": "0x2706A171ECb68E0038378D40Dd1d136361d0cB7d",
       "abi": [
         {
           "type": "function",
@@ -45,7 +45,7 @@
       ]
     },
     "Counter": {
-      "address": "0x0116686E2291dbd5e317F47faDBFb43B599786Ef",
+      "address": "0x31A65C6d4EB07ad51E7afc890aC3b7bE84dF2Ead",
       "abi": [
         {
           "type": "function",
@@ -83,7 +83,7 @@
       ]
     },
     "FunctionsConsumerExample": {
-      "address": "0x1Eb835EB7BEEEE9E6bbFe08F16a2d2eF668204bd",
+      "address": "0x993F00eb9C73e3E4eAe3d6Afb4Ba65A6b8B5E597",
       "abi": [
         {
           "type": "constructor",
@@ -413,8 +413,90 @@
     }
   },
   "11155111": {
+    "AiCast": {
+      "address": "0xa4a167adEBD070B080F8D659581FD43Bd3596705",
+      "abi": [
+        {
+          "type": "function",
+          "name": "answer",
+          "inputs": [],
+          "outputs": [
+            {
+              "name": "",
+              "type": "bool",
+              "internalType": "bool"
+            }
+          ],
+          "stateMutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "question",
+          "inputs": [],
+          "outputs": [
+            {
+              "name": "",
+              "type": "string",
+              "internalType": "string"
+            }
+          ],
+          "stateMutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "setQuestion",
+          "inputs": [
+            {
+              "name": "question_",
+              "type": "string",
+              "internalType": "string"
+            }
+          ],
+          "outputs": [],
+          "stateMutability": "nonpayable"
+        }
+      ]
+    },
+    "Counter": {
+      "address": "0xa132EDeBD759e501553e38288af669f56994FcD9",
+      "abi": [
+        {
+          "type": "function",
+          "name": "increment",
+          "inputs": [],
+          "outputs": [],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "number",
+          "inputs": [],
+          "outputs": [
+            {
+              "name": "",
+              "type": "uint256",
+              "internalType": "uint256"
+            }
+          ],
+          "stateMutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "setNumber",
+          "inputs": [
+            {
+              "name": "newNumber",
+              "type": "uint256",
+              "internalType": "uint256"
+            }
+          ],
+          "outputs": [],
+          "stateMutability": "nonpayable"
+        }
+      ]
+    },
     "FunctionsConsumerExample": {
-      "address": "0x8316C228e643297034EDE4dC648460403B953e96",
+      "address": "0x26009c033A53B1D2B1a03dfe559D6c1AB5B4f707",
       "abi": [
         {
           "type": "constructor",
