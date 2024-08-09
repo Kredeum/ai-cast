@@ -11,7 +11,7 @@ import type { Address } from "viem";
 export const createDeployedContractInfo = <TContractName extends ContractName>(
 	contractName: TContractName
 ) => {
-	const deployedContract = $state(
+	const deployedContract = $derived(
 		contracts?.[targetNetwork.targetNetwork.id]?.[
 			contractName as ContractName
 		] as Contract<TContractName>
