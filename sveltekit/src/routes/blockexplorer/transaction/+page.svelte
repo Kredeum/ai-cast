@@ -85,7 +85,7 @@
 									<Address address={receipt.contractAddress} format="long" />
 								</span>
 							{:else if transaction.to}
-								transaction.to && <Address address={transaction.to} format="long" />
+								<Address address={transaction.to} format="long" />
 							{/if}
 						</td>
 					</tr>
