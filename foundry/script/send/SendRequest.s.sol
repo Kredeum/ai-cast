@@ -2,8 +2,8 @@
 pragma solidity ^0.8.0;
 
 import {DeployLite} from "@forge-deploy-lite/DeployLite.s.sol";
-import {FunctionsConsumerExample} from "../src/FunctionsConsumerExample.sol";
-import {console} from "forge-std/console.sol";
+import {FunctionsConsumerExample} from "@ai-cast/FunctionsConsumerExample.sol";
+// import {console} from "forge-std/console.sol";
 
 contract SendRequest is DeployLite {
     function run() public virtual {
