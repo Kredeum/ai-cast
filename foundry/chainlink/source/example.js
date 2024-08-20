@@ -1,1 +1,0 @@
-return Functions.encodeUint256(Number(args[0]));

@@ -4,7 +4,7 @@ const data = {
   'model': 'gpt-4o-mini', 'messages': [
     {
       'role': 'system',
-      'content': 'You are a helpful assistant.'
+      'content': 'Always answer with one word: YES or NO'
     },
     {
       'role': 'user',

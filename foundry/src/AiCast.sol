@@ -8,100 +8,88 @@ import {FunctionsRequest} from "@chainlink/contracts/src/v0.8/functions/v1_0_0/l
 contract AiCast is FunctionsClient, ConfirmedOwner {
     using FunctionsRequest for FunctionsRequest.Request;
 
-    bytes32 public s_lastRequestId;
-    bytes public s_lastResponse;
-    bytes public s_lastError;
+    string private _javascript;
 
-    uint64 public s_subscriptionId;
-    uint32 public s_gasLimit;
-    bytes32 public s_donID;
+    bytes32 public lastRequestId;
+    string public lastResponse;
+    bytes public lastError;
+    string public lastUserPrompt;
 
-    string public question;
-    bool public answer;
+    uint64 private _subscriptionId;
+    uint32 private _gasLimit;
+    bytes32 private _donID;
+    uint64 public donHostedSecretsVersion;
 
     error UnexpectedRequestID(bytes32 requestId);
 
-    event Response(bytes32 indexed requestId, bytes response, bytes err);
+    event Javascript(string javascript);
+    event Request(bytes32 indexed requestId, string request);
+    event Response(bytes32 indexed requestId, string response, bytes err);
 
-    constructor(address router, uint64 subscriptionId, uint32 gasLimit, bytes32 donID)
-        FunctionsClient(router)
-        ConfirmedOwner(msg.sender)
-    {
-        setSubscriptionId(subscriptionId);
-        s_gasLimit = gasLimit;
-        s_donID = donID;
+    constructor(
+        address router,
+        string memory javascript_,
+        uint64 subscriptionId_,
+        uint32 gasLimit_,
+        bytes32 donID_,
+        uint64 donHostedSecretsVersion_
+    ) FunctionsClient(router) ConfirmedOwner(msg.sender) {
+        _javascript = javascript_;
+        _subscriptionId = subscriptionId_;
+        _gasLimit = gasLimit_;
+        _donID = donID_;
+        donHostedSecretsVersion = donHostedSecretsVersion_;
     }
 
-    function setSubscriptionId(uint64 subscriptionId) public onlyOwner {
-        s_subscriptionId = subscriptionId;
+    function setJavascript(string memory javascript_) external onlyOwner {
+        _javascript = javascript_;
+        emit Javascript(javascript_);
     }
 
-    function setGasLimit(uint32 gasLimit) public onlyOwner {
-        s_gasLimit = gasLimit;
+    function setSubscriptionId(uint64 subscriptionId_) external onlyOwner {
+        _subscriptionId = subscriptionId_;
     }
 
-    function setDonID(bytes32 donID) public onlyOwner {
-        s_donID = donID;
+    function setGasLimit(uint32 gasLimit_) external onlyOwner {
+        _gasLimit = gasLimit_;
     }
 
-    function setQuestion(string calldata question_) public {
-        question = question_;
+    function setDonID(bytes32 donID_) external onlyOwner {
+        _donID = donID_;
     }
 
-    /**
-     * @notice Send a simple request
-     * @param source JavaScript source code
-     * @param arg Argument accessible from within the source code
-     */
-    function sendRequest(string memory source, string memory arg, uint64 donHostedSecretsVersion)
-        external
-        onlyOwner
-        returns (bytes32)
-    {
+    function setDonHostedSecretsVersion(uint64 donHostedSecretsVersion_) external onlyOwner {
+        donHostedSecretsVersion = donHostedSecretsVersion_;
+    }
+
+    function sendRequest(string memory userPrompt) external onlyOwner returns (bytes32) {
+        lastUserPrompt = userPrompt;
+        lastRequestId = "";
+        lastResponse = "";
+        lastError = "";
+
         FunctionsRequest.Request memory req;
 
-        req.initializeRequestForInlineJavaScript(source);
+        req.initializeRequestForInlineJavaScript(_javascript);
 
         string[] memory args = new string[](1);
-        args[0] = arg;
+        args[0] = userPrompt;
+
         req.setArgs(args);
         req.addDONHostedSecrets(0, donHostedSecretsVersion);
 
-        s_lastRequestId = _sendRequest(req.encodeCBOR(), s_subscriptionId, s_gasLimit, s_donID);
+        lastRequestId = _sendRequest(req.encodeCBOR(), _subscriptionId, _gasLimit, _donID);
 
-        return s_lastRequestId;
+        emit Request(lastRequestId, userPrompt);
+        return lastRequestId;
     }
 
-    /**
-     * @notice Send a pre-encoded CBOR request
-     * @param request CBOR-encoded request data
-     * @param subscriptionId Billing ID
-     * @param gasLimit The maximum amount of gas the request can consume
-     * @param donID ID of the job to be invoked
-     * @return requestId The ID of the sent request
-     */
-    function sendRequestCBOR(bytes memory request, uint64 subscriptionId, uint32 gasLimit, bytes32 donID)
-        external
-        onlyOwner
-        returns (bytes32)
-    {
-        s_lastRequestId = _sendRequest(request, subscriptionId, gasLimit, donID);
-        return s_lastRequestId;
-    }
-
-    /**
-     * @notice Store latest result/error
-     * @param requestId The request ID, returned by sendRequest()
-     * @param response Aggregated response from the user code
-     * @param err Aggregated error from the user code or from the execution pipeline
-     * Either response or error parameter will be set, but never both
-     */
     function fulfillRequest(bytes32 requestId, bytes memory response, bytes memory err) internal override {
-        if (s_lastRequestId != requestId) {
+        if (lastRequestId != requestId) {
             revert UnexpectedRequestID(requestId);
         }
-        s_lastResponse = response;
-        s_lastError = err;
-        emit Response(requestId, s_lastResponse, s_lastError);
+        lastResponse = string(response);
+        lastError = err;
+        emit Response(requestId, lastResponse, lastError);
     }
 }

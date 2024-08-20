@@ -8,9 +8,11 @@ contract DeployAiCast is DeployLite {
     uint64 public subscriptionId = 3275;
     uint32 public gasLimit = 300000;
     bytes32 public donID = 0x66756e2d657468657265756d2d7365706f6c69612d3100000000000000000000;
+    string public javascript = vm.readFile("chainlink/source/ai-cast.js");
+    uint64 public donHostedSecretsVersion = 1724155422;
 
     function deployAiCast() public returns (address) {
-        return deployLite("AiCast", abi.encode(router, subscriptionId, gasLimit, donID));
+        return deployLite("AiCast", abi.encode(router, javascript, subscriptionId, gasLimit, donID, donHostedSecretsVersion));
     }
 
     function run() public virtual {

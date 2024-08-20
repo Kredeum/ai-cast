@@ -13,8 +13,7 @@ const makeRequestSepolia = async () => {
 
   const secrets = { openaiKey: process.env.OPENAI_API_KEY };
   const slotIdNumber = 0;
-  console.log("makeRequestSepolia ~ slotIdNumber , secrets:", slotIdNumber, secrets);
-  const expirationTimeMinutes = 60; // expiration time in minutes of the secrets
+  const expirationTimeMinutes = 600; // expiration time in minutes of the secrets
 
   // Initialize ethers signer and provider to interact with the contracts onchain
   const privateKey = process.env.PRIVATE_KEY; // fetch PRIVATE_KEY
