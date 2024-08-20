@@ -2,23 +2,21 @@ import fs from 'fs-extra';
 
 const mergeAbis = async () => {
   const addresses = await fs.readJSON('./addresses.json');
-  const deployedContracts: any = {};
+  const deployments: any = {};
 
   for (const [chainId, contracts] of Object.entries(addresses)) {
-    deployedContracts[chainId] = {};
-
     for (const [contractName, address] of Object.entries(contracts as any)) {
-      if (contractName === "chainName") break;
-      const json = await fs.readJSON(`./out/${contractName}.sol/${contractName}.json`);
+      const jsonPath = `./out/${contractName}.sol/${contractName}.json`;
+      if (!fs.existsSync(jsonPath)) continue;
 
-      deployedContracts[chainId][contractName] = {
-        address, abi: json.abi
-      }
+      const abi = (await fs.readJSON(jsonPath)).abi;
 
+      deployments[chainId] ||= {};
+      deployments[chainId][contractName] = { address, abi }
     }
-    console.log("deployedContracts[Number ~ deployedContracts:", deployedContracts);
-    await fs.writeJSON('./deployedContracts.json', deployedContracts, { spaces: 2 });
   }
+  console.log("deployments", deployments);
+  await fs.writeJSON('./deployments.json', deployments, { spaces: 2 });
 }
 
 mergeAbis().catch(console.error);

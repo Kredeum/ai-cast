@@ -5,70 +5,55 @@ import {FunctionsClient} from "@chainlink/contracts/src/v0.8/functions/v1_0_0/Fu
 import {ConfirmedOwner} from "@chainlink/contracts/src/v0.8/shared/access/ConfirmedOwner.sol";
 import {FunctionsRequest} from "@chainlink/contracts/src/v0.8/functions/v1_0_0/libraries/FunctionsRequest.sol";
 
-contract AiCast is FunctionsClient, ConfirmedOwner {
+/**
+ * THIS IS AN EXAMPLE CONTRACT THAT USES HARDCODED VALUES FOR CLARITY.
+ * THIS IS AN EXAMPLE CONTRACT THAT USES UN-AUDITED CODE.
+ * DO NOT USE THIS CODE IN PRODUCTION.
+ */
+contract FunctionsConsumerExample is FunctionsClient, ConfirmedOwner {
     using FunctionsRequest for FunctionsRequest.Request;
 
     bytes32 public s_lastRequestId;
     bytes public s_lastResponse;
     bytes public s_lastError;
 
-    uint64 public s_subscriptionId;
-    uint32 public s_gasLimit;
-    bytes32 public s_donID;
-
-    string public question;
-    bool public answer;
-
     error UnexpectedRequestID(bytes32 requestId);
 
     event Response(bytes32 indexed requestId, bytes response, bytes err);
 
-    constructor(address router, uint64 subscriptionId, uint32 gasLimit, bytes32 donID)
-        FunctionsClient(router)
-        ConfirmedOwner(msg.sender)
-    {
-        setSubscriptionId(subscriptionId);
-        s_gasLimit = gasLimit;
-        s_donID = donID;
-    }
-
-    function setSubscriptionId(uint64 subscriptionId) public onlyOwner {
-        s_subscriptionId = subscriptionId;
-    }
-
-    function setGasLimit(uint32 gasLimit) public onlyOwner {
-        s_gasLimit = gasLimit;
-    }
-
-    function setDonID(bytes32 donID) public onlyOwner {
-        s_donID = donID;
-    }
-
-    function setQuestion(string calldata question_) public {
-        question = question_;
-    }
+    constructor(address router) FunctionsClient(router) ConfirmedOwner(msg.sender) {}
 
     /**
      * @notice Send a simple request
      * @param source JavaScript source code
-     * @param arg Argument accessible from within the source code
+     * @param encryptedSecretsUrls Encrypted URLs where to fetch user secrets
+     * @param donHostedSecretsSlotID Don hosted secrets slotId
+     * @param donHostedSecretsVersion Don hosted secrets version
+     * @param args List of arguments accessible from within the source code
+     * @param bytesArgs Array of bytes arguments, represented as hex strings
+     * @param subscriptionId Billing ID
      */
-    function sendRequest(string memory source, string memory arg, uint64 donHostedSecretsVersion)
-        external
-        onlyOwner
-        returns (bytes32)
-    {
+    function sendRequest(
+        string memory source,
+        bytes memory encryptedSecretsUrls,
+        uint8 donHostedSecretsSlotID,
+        uint64 donHostedSecretsVersion,
+        string[] memory args,
+        bytes[] memory bytesArgs,
+        uint64 subscriptionId,
+        uint32 gasLimit,
+        bytes32 donID
+    ) external onlyOwner returns (bytes32 requestId) {
         FunctionsRequest.Request memory req;
-
         req.initializeRequestForInlineJavaScript(source);
-
-        string[] memory args = new string[](1);
-        args[0] = arg;
-        req.setArgs(args);
-        req.addDONHostedSecrets(0, donHostedSecretsVersion);
-
-        s_lastRequestId = _sendRequest(req.encodeCBOR(), s_subscriptionId, s_gasLimit, s_donID);
-
+        if (encryptedSecretsUrls.length > 0) {
+            req.addSecretsReference(encryptedSecretsUrls);
+        } else if (donHostedSecretsVersion > 0) {
+            req.addDONHostedSecrets(donHostedSecretsSlotID, donHostedSecretsVersion);
+        }
+        if (args.length > 0) req.setArgs(args);
+        if (bytesArgs.length > 0) req.setBytesArgs(bytesArgs);
+        s_lastRequestId = _sendRequest(req.encodeCBOR(), subscriptionId, gasLimit, donID);
         return s_lastRequestId;
     }
 
@@ -83,7 +68,7 @@ contract AiCast is FunctionsClient, ConfirmedOwner {
     function sendRequestCBOR(bytes memory request, uint64 subscriptionId, uint32 gasLimit, bytes32 donID)
         external
         onlyOwner
-        returns (bytes32)
+        returns (bytes32 requestId)
     {
         s_lastRequestId = _sendRequest(request, subscriptionId, gasLimit, donID);
         return s_lastRequestId;

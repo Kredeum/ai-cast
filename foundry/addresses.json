@@ -1,12 +1,15 @@
 {
-  "10": {
-    "chainName": "optimism"
-  },
   "11155111": {
+    "AiCast": "0x8959EC88fBaB31eA0211160d5Aed34663595ea14",
+    "Counter": "0xa132EDeBD759e501553e38288af669f56994FcD9",
+    "FunctionsConsumerExample": "0x6ad759b1F962A5fa50831Ce597815e080E886804",
+    "Router": "0xb83E47C2bC239B3bf370bc41e1459A34b41238D0",
     "chainName": "sepolia"
   },
   "31337": {
-    "AiCast": "0x0116686E2291dbd5e317F47faDBFb43B599786Ef",
+    "AiCast": "0x9bAaB117304f7D6517048e371025dB8f89a8DbE5",
+    "Counter": "0x0116686E2291dbd5e317F47faDBFb43B599786Ef",
+    "FunctionsConsumerExample": "0x1Eb835EB7BEEEE9E6bbFe08F16a2d2eF668204bd",
     "chainName": "anvil"
   }
 }
