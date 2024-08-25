@@ -8,7 +8,7 @@ import {FunctionsRequest} from "@chainlink/contracts/src/v0.8/functions/v1_0_0/l
 contract AiCast is FunctionsClient, ConfirmedOwner {
     using FunctionsRequest for FunctionsRequest.Request;
 
-    string private _javascript;
+    string public javascript;
 
     bytes32 public lastRequestId;
     string public lastResponse;
@@ -34,7 +34,7 @@ contract AiCast is FunctionsClient, ConfirmedOwner {
         bytes32 donID_,
         uint64 donHostedSecretsVersion_
     ) FunctionsClient(router) ConfirmedOwner(msg.sender) {
-        _javascript = javascript_;
+        javascript = javascript_;
         _subscriptionId = subscriptionId_;
         _gasLimit = gasLimit_;
         _donID = donID_;
@@ -42,7 +42,7 @@ contract AiCast is FunctionsClient, ConfirmedOwner {
     }
 
     function setJavascript(string memory javascript_) external onlyOwner {
-        _javascript = javascript_;
+        javascript = javascript_;
         emit Javascript(javascript_);
     }
 
@@ -70,7 +70,7 @@ contract AiCast is FunctionsClient, ConfirmedOwner {
 
         FunctionsRequest.Request memory req;
 
-        req.initializeRequestForInlineJavaScript(_javascript);
+        req.initializeRequestForInlineJavaScript(javascript);
 
         string[] memory args = new string[](1);
         args[0] = userPrompt;

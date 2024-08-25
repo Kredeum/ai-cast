@@ -2,35 +2,33 @@ const { SecretsManager } = require("@chainlink/functions-toolkit");
 const ethers = require("ethers");
 require("@chainlink/env-enc").config();
 
-const makeRequestSepolia = async () => {
-  // hardcoded for Ethereum Sepolia
-  const routerAddress = "0xb83E47C2bC239B3bf370bc41e1459A34b41238D0";
-  const donId = "fun-ethereum-sepolia-1";
+const main = async () => {
+  // Sepolia
+  // const routerAddress = "0xb83E47C2bC239B3bf370bc41e1459A34b41238D0";
+  // const donId = "fun-ethereum-sepolia-1";
+  // const rpcUrl = process.env.ETHEREUM_SEPOLIA_RPC_URL;
+
+  // Base Sepolia
+  const routerAddress = "0xf9B8fc078197181C841c296C876945aaa425B278";
+  const donId = "fun-base-sepolia-1";
+  const rpcUrl = process.env.ETHEREUM_BASE_SEPOLIA_RPC_URL;
+
   const gatewayUrls = [
     "https://01.functions-gateway.testnet.chain.link/",
     "https://02.functions-gateway.testnet.chain.link/",
   ];
 
-  const secrets = { openaiKey: process.env.OPENAI_API_KEY };
   const slotIdNumber = 0;
   const expirationTimeMinutes = 600; // expiration time in minutes of the secrets
+  const secrets = { openaiKey: process.env.OPENAI_API_KEY };
+  const privateKey = process.env.PRIVATE_KEY;
 
-  // Initialize ethers signer and provider to interact with the contracts onchain
-  const privateKey = process.env.PRIVATE_KEY; // fetch PRIVATE_KEY
-  if (!privateKey)
-    throw new Error(
-      "private key not provided - check your environment variables"
-    );
-
-  const rpcUrl = process.env.ETHEREUM_SEPOLIA_RPC_URL; // fetch Sepolia RPC URL
-
-  if (!rpcUrl)
-    throw new Error(`rpcUrl not provided  - check your environment variables`);
+  if (!privateKey) throw new Error("private key not provided - check your environment variables");
+  if (!rpcUrl) throw new Error(`rpcUrl not provided  - check your environment variables`);
 
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-
   const wallet = new ethers.Wallet(privateKey);
-  const signer = wallet.connect(provider); // create ethers signer for signing transactions
+  const signer = wallet.connect(provider);
 
   // First encrypt secrets and upload the encrypted secrets to the DON
   const secretsManager = new SecretsManager({
@@ -42,7 +40,7 @@ const makeRequestSepolia = async () => {
 
   // Encrypt secrets and upload to DON
   const encryptedSecretsObj = await secretsManager.encryptSecrets(secrets);
-  console.log("makeRequestSepolia ~ encryptedSecretsObj\n", JSON.stringify(encryptedSecretsObj, null, 2));
+  // console.log("main ~ encryptedSecretsObj\n", JSON.stringify(encryptedSecretsObj, null, 2));
 
   console.log(
     `Upload encrypted secret to gateways ${gatewayUrls}. slotId ${slotIdNumber}. Expiration in minutes: ${expirationTimeMinutes}`
@@ -62,9 +60,6 @@ const makeRequestSepolia = async () => {
     `\n✅ Secrets uploaded properly to gateways ${gatewayUrls}! Gateways response: `,
     uploadResult
   );
-
-  const donHostedSecretsVersion = parseInt(uploadResult.version); // fetch the reference of the encrypted secrets
-  console.log("makeRequestSepolia ~ donHostedSecretsVersion:", donHostedSecretsVersion);
 };
 
-makeRequestSepolia().catch(console.error);
+main().catch(console.error);

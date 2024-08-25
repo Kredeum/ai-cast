@@ -1,0 +1,16 @@
+@openaikey = {{$processEnv OPENAI_API_KEY}}
+
+POST https://api.openai.com/v1/chat/completions
+Content-Type: application/json
+Authorization: Bearer {{openaikey}}
+
+{
+  "model": "gpt-4o-mini", "messages": [
+    {
+      "role": "user",
+      "content": "3+2"
+    }
+  ]
+}
+
+

@@ -3,18 +3,29 @@ pragma solidity ^0.8.0;
 
 import {DeployLite} from "@forge-deploy-lite/DeployLite.s.sol";
 import {AiCast} from "@ai-cast/AiCast.sol";
+import {console} from "forge-std/console.sol";
 
 contract AICastRequest is DeployLite {
-    uint64 public donHostedSecretsVersion = 1724155422;
-
     function run() public virtual {
-        require(block.chainid == 11155111, "Script dedicated to Sepolia!");
+        uint64 donHostedSecretsVersion = uint64(readUint("DonHostedSecretsVersion"));
+        address aiCastAddress = readAddress("AiCast");
+        console.log("run ~ aiCastAddress:", aiCastAddress);
+        AiCast aiCast = AiCast(aiCastAddress);
 
-        AiCast aiCast = AiCast(readAddress("AiCast"));
         uint64 previousDonHostedSecretsVersion = aiCast.donHostedSecretsVersion();
 
+        string memory javascript = vm.readFile("chainlink/source/ai-cast.js");
+        string memory previousJavascript = aiCast.javascript();
+
         vm.startBroadcast(msg.sender);
-        if (previousDonHostedSecretsVersion != donHostedSecretsVersion) {
+        if (!_stringEqual(javascript, previousJavascript)) {
+            console.log("run ~ previousJavascript:", previousJavascript);
+            console.log("run ~ javascript:", javascript);
+            aiCast.setJavascript(javascript);
+        }
+        if (donHostedSecretsVersion != previousDonHostedSecretsVersion) {
+            console.log("run ~ previousDonHostedSecretsVersion:", previousDonHostedSecretsVersion);
+            console.log("run ~ donHostedSecretsVersion:", donHostedSecretsVersion);
             aiCast.setDonHostedSecretsVersion(donHostedSecretsVersion);
         }
         aiCast.sendRequest("6*6=36?");

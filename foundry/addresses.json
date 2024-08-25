@@ -1,16 +1,26 @@
 {
   "11155111": {
-    "AiCast": "0x8b194DBEE1Aa5b1B8364fA3655BEaCC0Fee43112",
+    "AiCast": "0x29B7B4C31a755C3cD366f3fbC9Cf847Dc44A3e27",
     "Counter": "0xa132EDeBD759e501553e38288af669f56994FcD9",
+    "DonID": "0x66756e2d657468657265756d2d7365706f6c69612d3100000000000000000000",
     "FunctionsConsumerExample": "0x6ad759b1F962A5fa50831Ce597815e080E886804",
     "Router": "0xb83E47C2bC239B3bf370bc41e1459A34b41238D0",
+    "DonHostedSecretsVersion": "1724397009",
+    "SubscriptionId": "3275",
     "chainName": "sepolia"
   },
   "31337": {
-    "AiCast": "0x31A65C6d4EB07ad51E7afc890aC3b7bE84dF2Ead",
+    "AiCast": "0x1Eb835EB7BEEEE9E6bbFe08F16a2d2eF668204bd",
     "Counter": "0x0116686E2291dbd5e317F47faDBFb43B599786Ef",
     "FunctionsConsumerExample": "0x1Eb835EB7BEEEE9E6bbFe08F16a2d2eF668204bd",
-    "Router": "0xb83E47C2bC239B3bf370bc41e1459A34b41238D0",
     "chainName": "anvil"
+  },
+  "84532": {
+    "AiCast": "0x1A84578cC5275340C6Bc6612D364037Fa1bC9AbB",
+    "DonHostedSecretsVersion": "1724440094",
+    "DonID": "0x66756e2d626173652d7365706f6c69612d310000000000000000000000000000",
+    "Router": "0xf9B8fc078197181C841c296C876945aaa425B278",
+    "SubscriptionId": "159",
+    "chainName": "base-sepolia"
   }
 }
