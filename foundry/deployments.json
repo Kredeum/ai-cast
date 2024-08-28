@@ -1,7 +1,7 @@
 {
   "31337": {
     "AiCast": {
-      "address": "0x1Eb835EB7BEEEE9E6bbFe08F16a2d2eF668204bd",
+      "address": "0x0116686E2291dbd5e317F47faDBFb43B599786Ef",
       "abi": [
         {
           "type": "constructor",
@@ -102,8 +102,8 @@
           "outputs": [
             {
               "name": "",
-              "type": "bytes",
-              "internalType": "bytes"
+              "type": "string",
+              "internalType": "string"
             }
           ],
           "stateMutability": "view"
@@ -177,7 +177,7 @@
               "internalType": "bytes32"
             }
           ],
-          "stateMutability": "nonpayable"
+          "stateMutability": "payable"
         },
         {
           "type": "function",
@@ -250,6 +250,19 @@
           "inputs": [
             {
               "name": "to",
+              "type": "address",
+              "internalType": "address"
+            }
+          ],
+          "outputs": [],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "withdraw",
+          "inputs": [
+            {
+              "name": "receiver",
               "type": "address",
               "internalType": "address"
             }
@@ -371,9 +384,9 @@
             },
             {
               "name": "err",
-              "type": "bytes",
+              "type": "string",
               "indexed": false,
-              "internalType": "bytes"
+              "internalType": "string"
             }
           ],
           "anonymous": false
@@ -414,7 +427,7 @@
   },
   "84532": {
     "AiCast": {
-      "address": "0x1A84578cC5275340C6Bc6612D364037Fa1bC9AbB",
+      "address": "0xa043949B6984D8704501EC64519E2b6e00a4329A",
       "abi": [
         {
           "type": "constructor",
@@ -515,8 +528,8 @@
           "outputs": [
             {
               "name": "",
-              "type": "bytes",
-              "internalType": "bytes"
+              "type": "string",
+              "internalType": "string"
             }
           ],
           "stateMutability": "view"
@@ -590,7 +603,7 @@
               "internalType": "bytes32"
             }
           ],
-          "stateMutability": "nonpayable"
+          "stateMutability": "payable"
         },
         {
           "type": "function",
@@ -663,6 +676,19 @@
           "inputs": [
             {
               "name": "to",
+              "type": "address",
+              "internalType": "address"
+            }
+          ],
+          "outputs": [],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "withdraw",
+          "inputs": [
+            {
+              "name": "receiver",
               "type": "address",
               "internalType": "address"
             }
@@ -784,9 +810,9 @@
             },
             {
               "name": "err",
-              "type": "bytes",
+              "type": "string",
               "indexed": false,
-              "internalType": "bytes"
+              "internalType": "string"
             }
           ],
           "anonymous": false
@@ -827,7 +853,7 @@
   },
   "11155111": {
     "AiCast": {
-      "address": "0x29B7B4C31a755C3cD366f3fbC9Cf847Dc44A3e27",
+      "address": "0xD2225b14486CE1e97d50607F3Bd5264833B42b77",
       "abi": [
         {
           "type": "constructor",
@@ -928,8 +954,8 @@
           "outputs": [
             {
               "name": "",
-              "type": "bytes",
-              "internalType": "bytes"
+              "type": "string",
+              "internalType": "string"
             }
           ],
           "stateMutability": "view"
@@ -1003,7 +1029,7 @@
               "internalType": "bytes32"
             }
           ],
-          "stateMutability": "nonpayable"
+          "stateMutability": "payable"
         },
         {
           "type": "function",
@@ -1076,6 +1102,19 @@
           "inputs": [
             {
               "name": "to",
+              "type": "address",
+              "internalType": "address"
+            }
+          ],
+          "outputs": [],
+          "stateMutability": "nonpayable"
+        },
+        {
+          "type": "function",
+          "name": "withdraw",
+          "inputs": [
+            {
+              "name": "receiver",
               "type": "address",
               "internalType": "address"
             }
@@ -1197,9 +1236,9 @@
             },
             {
               "name": "err",
-              "type": "bytes",
+              "type": "string",
               "indexed": false,
-              "internalType": "bytes"
+              "internalType": "string"
             }
           ],
           "anonymous": false

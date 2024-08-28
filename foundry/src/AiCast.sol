@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.19;
 
-import {FunctionsClient} from "@chainlink/contracts/src/v0.8/functions/v1_0_0/FunctionsClient.sol";
 import {ConfirmedOwner} from "@chainlink/contracts/src/v0.8/shared/access/ConfirmedOwner.sol";
+import {FunctionsClient} from "@chainlink/contracts/src/v0.8/functions/v1_0_0/FunctionsClient.sol";
 import {FunctionsRequest} from "@chainlink/contracts/src/v0.8/functions/v1_0_0/libraries/FunctionsRequest.sol";
 
 contract AiCast is FunctionsClient, ConfirmedOwner {
@@ -12,7 +12,7 @@ contract AiCast is FunctionsClient, ConfirmedOwner {
 
     bytes32 public lastRequestId;
     string public lastResponse;
-    bytes public lastError;
+    string public lastError;
     string public lastUserPrompt;
 
     uint64 private _subscriptionId;
@@ -24,7 +24,7 @@ contract AiCast is FunctionsClient, ConfirmedOwner {
 
     event Javascript(string javascript);
     event Request(bytes32 indexed requestId, string request);
-    event Response(bytes32 indexed requestId, string response, bytes err);
+    event Response(bytes32 indexed requestId, string response, string err);
 
     constructor(
         address router,
@@ -62,7 +62,9 @@ contract AiCast is FunctionsClient, ConfirmedOwner {
         donHostedSecretsVersion = donHostedSecretsVersion_;
     }
 
-    function sendRequest(string memory userPrompt) external onlyOwner returns (bytes32) {
+    function sendRequest(string memory userPrompt) external payable returns (bytes32) {
+        require(msg.value == 2e15, "Request requires 0.002 ether");
+
         lastUserPrompt = userPrompt;
         lastRequestId = "";
         lastResponse = "";
@@ -89,7 +91,12 @@ contract AiCast is FunctionsClient, ConfirmedOwner {
             revert UnexpectedRequestID(requestId);
         }
         lastResponse = string(response);
-        lastError = err;
+        lastError = string(err);
         emit Response(requestId, lastResponse, lastError);
+    }
+
+    function withdraw(address receiver) external onlyOwner {
+        (bool success,) = payable(receiver).call{value: address(this).balance}("");
+        require(success, "Withdraw failed");
     }
 }

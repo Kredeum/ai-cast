@@ -1,8 +1,8 @@
 #!/bin/sh
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
-  echo "Run 'anvil' if not already running"
-  echo "Return after 'Listening', continue to run in background, output logs to 'anvil.log'"
+  echo "Start 'anvil' if not already running"
+  echo "Return after getting 'Listening', then continue to run in background, output logs to 'anvil.log'"
   echo
 
   echo "Usage: ./anvil.sh [OPTION]"
